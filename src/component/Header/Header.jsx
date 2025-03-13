@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router';
+import { Link as ScrollLink } from 'react-scroll';
 export default function Header() {
     return (
         <div className="w-full h-20 flex items-center bg-gradient-to-b from-black to-transparent p-10  ">
@@ -15,22 +16,19 @@ export default function Header() {
                     Hands
                 </h1>
             </div>
-
-            {/* MENU CHÍNH GIỮA */}
             <nav className="flex-1 flex justify-center space-x-10 text-white font-semibold">
                 <Link to="/" className="relative group">
                     HOME
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
                 </Link>
-
-                <Link to="/selected" className="relative group">
-                    SHOWING MOVIES
+                <ScrollLink to="movie-list" smooth={true} duration={500} className="relative group cursor-pointer">
+                    SHOWING MOVIE
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-                <Link to="/detail" className="relative group">
+                </ScrollLink>
+                <ScrollLink to="showing-movie" smooth={true} duration={500} className="relative group cursor-pointer">
                     COMING MOVIES
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
+                </ScrollLink>
             </nav>
             <div className='space-x-5 text-white font-semibold'>
                 <Link className="relative group">SignIn
@@ -38,8 +36,6 @@ export default function Header() {
                 <Link className="relative group">SignUp
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span></Link>
             </div>
-
-            {/* USER hoặc SIGN IN / SIGN UP */}
 
         </div>
     );
