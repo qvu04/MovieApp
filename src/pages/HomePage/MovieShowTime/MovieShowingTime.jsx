@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router';
-import { getMovieShowingTime } from '../../api/movieService';
+import { getMovieShowingTime } from '../../../api/movieService';
 export default function MovieShowingTime() {
     const { maHeThongRap } = useParams();
     const [showing, setShowing] = useState([]);
     useEffect(() => {
         getMovieShowingTime()
             .then((result) => {
+                console.log('✌️result --->', result.data.content);
                 setShowing(result.data.content);
             }).catch((err) => {
                 console.log('✌️err --->', err);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getMovieLogo } from '../../api/movieService'
+import { getMovieLogo } from '../../../api/movieService'
 import { Link } from 'react-router';
 export default function MovieLogo() {
     const [logo, setLogo] = useState([]);

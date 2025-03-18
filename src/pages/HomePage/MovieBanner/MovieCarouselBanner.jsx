@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getMovieCarouselBanner } from '../../api/movieService'
+import { getMovieCarouselBanner } from '../../../api/movieService'
 import { Carousel } from 'antd';
 export default function MovieCarouselBanner() {
     const [banner, setBanner] = useState([]);

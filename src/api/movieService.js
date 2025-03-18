@@ -20,3 +20,6 @@ export const getMovieDetail = (detailRoom) => {
     return https.get(`/api/QuanLyPhim/LayThongTinPhim?MaPhim=${detailRoom}`)
 
 }
+export const getMovieTicket = (maPhim) => {
+    return https.get(`https://movienew.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`)
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getMovieDetail } from '../../api/movieService'
+import { getMovieDetail } from '../../../api/movieService'
 import { Link, useParams } from 'react-router';
 
 export default function MovieDetail() {
@@ -50,6 +50,12 @@ export default function MovieDetail() {
                             to={detail.trailer}
                         >
                             Xem trailer
+                        </Link>
+                        <Link
+                            className="mt-6 inline-block bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-6 py-2 rounded-lg shadow-md transition duration-300 cursor-pointer"
+                            to={`/selectedTicket/${detail.maPhim}`}
+                        >
+                            Đặt vé ngay
                         </Link>
                     </div>
                 </div>

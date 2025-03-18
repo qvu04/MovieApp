@@ -26,14 +26,14 @@ export default function Header() {
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
                 </ScrollLink>
                 <ScrollLink to="showing-movie" smooth={true} duration={500} className="relative group cursor-pointer">
-                    COMING MOVIES
+                    SHOWTIME MOVIE
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
                 </ScrollLink>
             </nav>
             <div className='space-x-5 text-white font-semibold'>
-                <Link className="relative group">SignIn
+                <Link className="relative group" to='/login'>LOGIN
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span></Link>
-                <Link className="relative group">SignUp
+                <Link to='/register' className="relative group" >REGISTER
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span></Link>
             </div>
 
