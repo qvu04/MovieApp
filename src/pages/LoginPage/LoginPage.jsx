@@ -1,49 +1,47 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, Typography, message } from "antd";
+import { Form, Input, Button, Checkbox, Typography } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../../api/loginService";
 import { useNavigate } from "react-router-dom";
-import toast from 'react-hot-toast';
-
-const { Title, Text } = Typography;
+import toast from "react-hot-toast";
+import { setUser } from "./redux/userSlice";
+const { Text } = Typography;
 
 const LoginPage = () => {
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogin = async (values) => {
-        setLoading(true);
+        console.log("✌️Dữ liệu gửi đi --->", values);
+
         try {
             const response = await loginUser(values);
-            localStorage.setItem("token", response.data.token);
+            console.log("✌️Dữ liệu trả về từ server --->", response.data);
+            dispatch(setUser(response.data)); // Lưu user vào Redux
             toast.success("Đăng nhập thành công!");
-
-            if (response.data.role === "admin") {
-                navigate("/admin");
-            } else {
-                navigate("/home");
-            }
+            navigate("/");
         } catch (error) {
-            toast.error("Sai tài khoản hoặc mật khẩu!");
+            toast.error(error.response?.data || "Đăng nhập thất bại!");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen ">
+        <div className="flex items-center justify-center min-h-screen">
             <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
                 <div className="text-center text-3xl font-bold text-blue-600">
                     Đăng Nhập
                 </div>
 
                 <Form layout="vertical" onFinish={handleLogin}>
-                    <Form.Item label="Tên đăng nhập" name="username" rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập!" }]}>
+                    <Form.Item label="Tên đăng nhập" name="taiKhoan" rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập!" }]}>
                         <Input prefix={<UserOutlined />} placeholder="Nhập tên đăng nhập" size="large" />
                     </Form.Item>
 
-                    <Form.Item label="Mật khẩu" name="password" rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}>
+                    <Form.Item label="Mật khẩu" name="matKhau" rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}>
                         <Input.Password prefix={<LockOutlined />} placeholder="Nhập mật khẩu" size="large" />
                     </Form.Item>
 
@@ -57,14 +55,12 @@ const LoginPage = () => {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button block type="primary" htmlType="submit" size="large" loading={loading} className="bg-blue-600 hover:bg-blue-700">
+                        <Button block type="primary" htmlType="submit" size="large" className="bg-blue-600 hover:bg-blue-700">
                             Đăng Nhập
                         </Button>
                         <div className="text-center mt-4">
                             <Text>Bạn chưa có tài khoản?</Text>{" "}
-                            <a href="/register" className="text-blue-500 hover:underline">
-                                Đăng ký ngay!
-                            </a>
+                            <a href="/register" className="text-blue-500 hover:underline">Đăng ký ngay!</a>
                         </div>
                     </Form.Item>
                 </Form>

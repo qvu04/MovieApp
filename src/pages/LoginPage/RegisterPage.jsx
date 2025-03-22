@@ -1,20 +1,42 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Select, message } from "antd";
+import { Form, Input, Button } from "antd";
 import { registerUser } from "../../api/loginService";
-
-const { Option } = Select;
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const RegisterPage = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [role, setRole] = useState("user");
-    const handleRegister = async () => {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const handleRegister = async (values) => {
+        console.log("📩 Dữ liệu gửi đi:", values);
+        setLoading(true);
         try {
-            await registerUser({ email, password, role });
-            message.success("Đăng ký thành công!");
+            const response = await registerUser({
+                taiKhoan: values.email.split("@")[0],
+                matKhau: values.matKhau,
+                email: values.email,
+                soDt: "0123456789",
+                maNhom: "GP01",
+                hoTen: "Người dùng mới",
+                maLoaiNguoiDung: "user" // Mặc định đăng ký là user
+            });
+            const admin = 
+
+            console.log("✅ Đăng ký thành công:", response.data);
+            toast.success("Đăng ký thành công!");
+            if (response.data) {
+                localStorage.setItem("user", JSON.stringify(response.data));
+            } else {
+                console.error("❌ Không có dữ liệu trả về từ API!");
+            }
+
+            navigate("/login");
         } catch (error) {
-            console.error("Lỗi đăng ký:", error);
-            message.error("Đăng ký thất bại!");
+            console.error("❌ Lỗi đăng ký:", error.response?.data || error);
+            toast.error(error.response?.data || "Đăng ký thất bại!");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -25,23 +47,54 @@ const RegisterPage = () => {
                     Đăng Ký
                 </div>
                 <Form layout="vertical" onFinish={handleRegister}>
-                    <Form.Item label="Email" name="email" rules={[{ required: true, type: "email", message: "Vui lòng nhập email hợp lệ!" }]}>
-                        <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        rules={[{ required: true, type: "email", message: "Vui lòng nhập email hợp lệ!" }]}
+                    >
+                        <Input />
                     </Form.Item>
 
-                    <Form.Item label="Mật khẩu" name="password" rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}>
-                        <Input.Password value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <Form.Item
+                        label="Mật khẩu"
+                        name="matKhau"
+                        rules={[
+                            { required: true, message: "Vui lòng nhập mật khẩu!" },
+                            { min: 6, message: "Mật khẩu phải có ít nhất 6 ký tự!" }
+                        ]}
+                    >
+                        <Input.Password />
                     </Form.Item>
 
-                    <Form.Item label="Vai trò" name="role">
-                        <Select value={role} onChange={(value) => setRole(value)}>
-                            <Option value="user">User</Option>
-                            <Option value="admin">Admin</Option>
-                        </Select>
+                    <Form.Item
+                        label="Xác nhận mật khẩu"
+                        name="confirmPassword"
+                        dependencies={["matKhau"]}
+                        rules={[
+                            { required: true, message: "Vui lòng nhập lại mật khẩu!" },
+                            ({ getFieldValue }) => ({
+                                validator(_, value) {
+                                    if (!value || getFieldValue("matKhau") === value) {
+                                        return Promise.resolve();
+                                    }
+                                    return Promise.reject(new Error("Mật khẩu không khớp!"));
+                                },
+                            }),
+                        ]}
+                    >
+                        <Input.Password />
                     </Form.Item>
 
+                    {/* Nút Đăng Ký */}
                     <Form.Item>
-                        <Button block type="primary" htmlType="submit" size="large" className="bg-blue-600 hover:bg-blue-700">
+                        <Button
+                            block
+                            type="primary"
+                            htmlType="submit"
+                            size="large"
+                            loading={loading}
+                            className="bg-blue-600 hover:bg-blue-700"
+                        >
                             Đăng Ký
                         </Button>
                     </Form.Item>

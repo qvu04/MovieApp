@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+
 import { https } from "./config"
 
 export const getMovieCarouselBanner = () => {

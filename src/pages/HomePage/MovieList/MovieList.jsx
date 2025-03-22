@@ -49,8 +49,7 @@ export default function MovieList() {
                             ⭐ {item.danhGia}
                         </p>
 
-                        {/* Tên phim */}
-                        <h1 className="text-lg font-bold mt-3 text-center">{item.tenPhim}</h1>
+                        <h1 className="text-lg text-white font-bold mt-3 text-center">{item.tenPhim}</h1>
                     </div>
                 ))}
             </Carousel>

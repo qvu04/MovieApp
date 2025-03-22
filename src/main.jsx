@@ -6,10 +6,12 @@ import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import ticketSlice from './pages/HomePage/MovieTicket/redux/ticketSlice.js'
 import loadingSlice from './component/Loading/redux/loadingSlice.js'
-const store = configureStore({
+import userSlice from './pages/LoginPage/redux/userSlice.js'
+export const store = configureStore({
   reducer: {
     ticketSlice: ticketSlice,
     loadingSlice: loadingSlice,
+    userSlice: userSlice,
   }
 })
 

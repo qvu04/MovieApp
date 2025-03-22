@@ -1,7 +1,15 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router';
 import { Link as ScrollLink } from 'react-scroll';
+import { logoutUser } from '../../pages/LoginPage/redux/userSlice';
 export default function Header() {
+    const { user } = useSelector((state) => state.userSlice);
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        dispatch(logoutUser());
+        window.location.reload();
+    };
     return (
         <div className="w-full h-20 flex items-center bg-gradient-to-b from-black to-transparent p-10  ">
             <div>
@@ -31,10 +39,23 @@ export default function Header() {
                 </ScrollLink>
             </nav>
             <div className='space-x-5 text-white font-semibold'>
-                <Link className="relative group" to='/login'>LOGIN
-                    <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span></Link>
-                <Link to='/register' className="relative group" >REGISTER
-                    <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span></Link>
+                {user ? (
+                    <div className="flex items-center gap-4">
+                        <span className="font-semibold text-white">{user.taiKhoan}</span>
+                        <div className='flex items-center justify-center'>
+                            <i class="fa-solid fa-user"></i>
+                            <span className='text-xl text-white ml-3'>{user.content.taiKhoan}</span>
+                        </div>
+                        <button onClick={handleLogout} className="bg-red-500 cursor-pointer hover:bg-red-700 px-4 py-2 rounded">
+                            Đăng Xuất
+                        </button>
+                    </div>
+                ) : (
+                    <div className="flex gap-4">
+                        <Link to="/login" className=" bg-white text-black px-4 py-2 rounded">Login</Link>
+                        <Link to="/register" className="bg-white text-black px-4 py-2 rounded">Register</Link>
+                    </div>
+                )}
             </div>
 
         </div>
