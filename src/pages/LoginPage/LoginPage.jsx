@@ -1,25 +1,28 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Checkbox, Typography } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../api/loginService";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { setUser } from "./redux/userSlice";
+import { loginAdminUser, setUser } from "./redux/userSlice";
 const { Text } = Typography;
-
 const LoginPage = () => {
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const { admin_account } = useSelector((state) => state.userSlice);
     const handleLogin = async (values) => {
         console.log("✌️Dữ liệu gửi đi --->", values);
-
+        if (values.taiKhoan == admin_account.tai_khoan && values.matKhau == admin_account.mat_khau) {
+            dispatch(loginAdminUser());
+            toast.success("Đăng nhập thành công với role là Admin!");
+            navigate('/admin');
+            return;
+        }
         try {
             const response = await loginUser(values);
             console.log("✌️Dữ liệu trả về từ server --->", response.data);
-            dispatch(setUser(response.data)); // Lưu user vào Redux
+            dispatch(setUser(response.data));
             toast.success("Đăng nhập thành công!");
             navigate("/");
         } catch (error) {

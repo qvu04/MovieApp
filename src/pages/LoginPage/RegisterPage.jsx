@@ -19,21 +19,19 @@ const RegisterPage = () => {
                 soDt: "0123456789",
                 maNhom: "GP01",
                 hoTen: "Người dùng mới",
-                maLoaiNguoiDung: "user" // Mặc định đăng ký là user
+                maLoaiNguoiDung: "user"
             });
-            const admin = 
-
-            console.log("✅ Đăng ký thành công:", response.data);
+            console.log(" Đăng ký thành công:", response.data);
             toast.success("Đăng ký thành công!");
             if (response.data) {
                 localStorage.setItem("user", JSON.stringify(response.data));
             } else {
-                console.error("❌ Không có dữ liệu trả về từ API!");
+                console.error(" Không có dữ liệu trả về từ API!");
             }
 
             navigate("/login");
         } catch (error) {
-            console.error("❌ Lỗi đăng ký:", error.response?.data || error);
+            console.error(" Lỗi đăng ký:", error.response?.data || error);
             toast.error(error.response?.data || "Đăng ký thất bại!");
         } finally {
             setLoading(false);

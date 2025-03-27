@@ -23,7 +23,6 @@ https.interceptors.request.use(function (config) {
 
 // Add a response interceptor
 https.interceptors.response.use(function (response) {
-    console.log("Api về thành công");
     setTimeout(() => {
         store.dispatch(hideLoading());
     }, 2000)
@@ -31,7 +30,6 @@ https.interceptors.response.use(function (response) {
     // Do something with response data
     return response;
 }, function (error) {
-    console.log("Api lỗi");
     store.dispatch(hideLoading());
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error

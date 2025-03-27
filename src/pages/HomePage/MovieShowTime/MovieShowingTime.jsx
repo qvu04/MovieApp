@@ -7,7 +7,6 @@ export default function MovieShowingTime() {
     useEffect(() => {
         getMovieShowingTime()
             .then((result) => {
-                console.log('✌️result --->', result.data.content);
                 setShowing(result.data.content);
             }).catch((err) => {
                 console.log('✌️err --->', err);

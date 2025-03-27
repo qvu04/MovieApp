@@ -3,7 +3,6 @@ import MovieCarouselBanner from './MovieBanner/MovieCarouselBanner'
 import MovieList from './MovieList/MovieList'
 import MovieLogo from './MovieShowTime/MovieLogo'
 import MovieShowingTime from './MovieShowTime/MovieShowingTime'
-import MovieTicketSelected from './MovieTicket/MovieTicketSelected'
 
 export default function HomePage() {
     return (

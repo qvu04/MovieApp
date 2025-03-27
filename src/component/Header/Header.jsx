@@ -37,6 +37,7 @@ export default function Header() {
                     SHOWTIME MOVIE
                     <span className="absolute left-0 bottom-0 w-0 h-1 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
                 </ScrollLink>
+                {user?.maLoaiNguoiDung === "admin" && <Link to="/admin" className="relative group text-yellow-400">ADMIN DASHBOARD</Link>}
             </nav>
             <div className='space-x-5 text-white font-semibold'>
                 {user ? (
