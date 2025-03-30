@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { getFilmList } from '../../api/adminService';
-import AddFilm from './AddFilm';
 import { Link } from 'react-router';
+import EditFilm from './EditFilm';
+import { Modal } from 'antd';
 
 export default function FilmManager() {
     const [film, setFilm] = useState([]);
@@ -15,6 +16,7 @@ export default function FilmManager() {
                 console.log('✌️err --->', err);
             });
     }, [])
+    const memorizedModal = useMemo(() => <EditFilm />, []);
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
             <div className="flex justify-between items-center mb-5">
@@ -54,9 +56,19 @@ export default function FilmManager() {
                                     <td className="border px-4 py-3 font-semibold text-gray-700">{film.tenPhim}</td>
                                     <td className="border px-4 py-3 text-gray-600 truncate max-w-xs">{film.moTa}</td>
                                     <td className="border px-4 py-3 flex justify-center space-x-2">
-                                        <button className="text-blue-600 hover:text-blue-800">
+                                        <button onClick={() => {
+                                            setIsModal(true);
+
+                                        }} className=" cursor-pointer text-blue-600 hover:text-blue-800">
                                             ✏️
                                         </button>
+                                        <Modal
+                                            open={isModal}
+                                            destroyOnClose={false}
+                                            onCancel={() => setIsModal(false)}
+                                            footer={null}>
+                                            <EditFilm />
+                                        </Modal>
                                         <button className="text-red-600 hover:text-red-800">
                                             🗑️
                                         </button>

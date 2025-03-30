@@ -14,6 +14,7 @@ import TemPlate from './pages/Template/TemPlate'
 import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute'
 import AdminPage from './pages/AdminPage/AdminPage'
 import AddFilm from './pages/AdminPage/AddFilm'
+import EditFilm from './pages/AdminPage/EditFilm'
 function App() {
 
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/login' element={<LoginPage />}></Route>
           <Route path='/register' element={<RegisterPage />}></Route>
           <Route path='/admin/addfilm' element={<AddFilm />}></Route>
+          <Route path='/admin/edit/:id' element={<EditFilm />}></Route>
           <Route path="/admin" element={
             <ProtectedRoute role="admin">
               <AdminPage />

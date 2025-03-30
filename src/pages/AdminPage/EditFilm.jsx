@@ -1,51 +1,62 @@
-import React from "react";
-import { Form, Input, Button, DatePicker, Upload, Switch, InputNumber, message } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { addFilm } from "../../api/adminService";
-import toast from "react-hot-toast";
-
-const AddFilm = () => {
+import React, { useEffect, useState } from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import {
+    Form, Input, Button, DatePicker, Upload, Switch, InputNumber, message
+} from 'antd';
+import { useNavigate, useParams } from 'react-router';
+import { editFilm, getInfoFilm } from '../../api/adminService';
+import toast from 'react-hot-toast';
+import { getMovieDetail } from '../../api/movieService';
+const EditFilm = () => {
     const [form] = Form.useForm();
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [infoFilm, setInfoFilm] = useState(null);
+    useEffect(() => {
+        getInfoFilm(id)
+            .then((result) => {
+                const film = result.data.content;
+                setInfoFilm(film);
+                form.setFieldValue({
+                    maPhim: film.maPhim,
+                    tenPhim: film.tenPhim,
+                    moTa: film.moTa,
+                    ngayKhoiChieu: moment(film.ngayKhoiChieu),
+                    sapChieu: film.sapChieu,
+                    dangChieu: film.dangChieu,
+                    hot: film.hot,
+                    danhGia: film.danhGia,
+                    hinhAnh: film.hinhAnh ? [{ uid: "-1", url: film.hinhAnh }] : [],
+                })
+            }).catch((err) => {
+                console.log('✌️err --->', err);
 
-    const handleSubmit = async (values) => {
-        const formData = new FormData();
+            });
+    }, [id])
+    const handleSubmit = () => {
+        let formData = new FormData();
+        formData.append("maPhim", values.maPhim);
         formData.append("tenPhim", values.tenPhim);
         formData.append("trailer", values.trailer);
         formData.append("moTa", values.moTa);
-        formData.append("maNhom", "GP01");
         formData.append("ngayKhoiChieu", values.ngayKhoiChieu.format("DD-MM-YYYY"));
         formData.append("sapChieu", values.sapChieu ? "true" : "false");
         formData.append("dangChieu", values.dangChieu ? "true" : "false");
         formData.append("hot", values.hot ? "true" : "false");
-        formData.append("danhGia", values.danhGia.toString());
+        formData.append("danhGia", values.danhGia);
 
-        if (values.hinhAnh && values.hinhAnh.length > 0) {
-            const file = values.hinhAnh[0]?.originFileObj;
-            if (file) {
-                formData.append("hinhAnh", file);
-            } else {
-                toast.error("Vui lòng chọn lại ảnh!");
-                return;
-            }
-        } else {
-            toast.error("Vui lòng chọn hình ảnh!");
-            return;
+        if (values.hinhAnh && values.hinhAnh[0]?.originFileObj) {
+            formData.append("File", values.hinhAnh[0].originFileObj);
         }
 
-        console.log("FormData:", [...formData.entries()]);
-
-        try {
-            const res = await addFilm(formData);
-            console.log('✌️ Response:', res);
-            toast.success("Thêm phim thành công!");
-            form.resetFields();
-        } catch (error) {
-            if (error.response) {
-                console.log("Lỗi từ server:", error.response.data);
-            }
-            toast.error("Lỗi khi thêm phim!");
-        }
-    };
+        editFilm(formData)
+            .then((result) => {
+                toast.success("Cập nhật phim thành công!");
+            }).catch((err) => {
+                console.log('✌️err --->', err);
+                toast.error("Cập nhật phim thất bại!");
+            });
+    }
 
     return (
         <Form
@@ -54,7 +65,8 @@ const AddFilm = () => {
             onFinish={handleSubmit}
             style={{ maxWidth: 600, margin: "auto" }}
         >
-            <h1 className="text-center text-2xl">Add Film</h1>
+            <h1 className="text-center text-2xl">Chỉnh sửa phim</h1>
+
             <Form.Item label="Tên phim" name="tenPhim" rules={[{ required: true, message: "Vui lòng nhập tên phim" }]}>
                 <Input />
             </Form.Item>
@@ -92,9 +104,13 @@ const AddFilm = () => {
                 name="hinhAnh"
                 valuePropName="fileList"
                 getValueFromEvent={(e) => e?.fileList || []}
-                rules={[{ required: true, message: "Vui lòng chọn hình ảnh" }]}
             >
-                <Upload maxCount={1} listType="picture-card" beforeUpload={() => false}>
+                <Upload
+                    maxCount={1}
+                    listType="picture-card"
+                    beforeUpload={() => false}
+                    defaultFileList={infoFilm ? [{ uid: "-1", url: infoFilm.hinhAnh }] : []}
+                >
                     <button type="button">
                         <PlusOutlined />
                         <div>Upload</div>
@@ -104,11 +120,10 @@ const AddFilm = () => {
 
             <Form.Item>
                 <Button type="primary" htmlType="submit">
-                    Thêm phim
+                    Cập nhật phim
                 </Button>
             </Form.Item>
         </Form>
     );
 };
-
-export default AddFilm;
+export default () => <EditFilm />;
