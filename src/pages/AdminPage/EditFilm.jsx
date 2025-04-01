@@ -16,6 +16,7 @@ const EditFilm = () => {
         getInfoFilm(id)
             .then((result) => {
                 const film = result.data.content;
+                console.log('✌️film --->', film);
                 setInfoFilm(film);
                 form.setFieldValue({
                     maPhim: film.maPhim,
