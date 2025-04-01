@@ -10,7 +10,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import { Toaster } from 'react-hot-toast';
 import Loading from './component/Loading/Loading';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import { TemPlate } from './pages/Template/TemPlate';
+import TemPlate from './pages/TemPlate/TemPlate';
 import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
 import AdminPage from './pages/AdminPage/AdminPage';
 import AddFilm from './pages/AdminPage/AddFilm';
