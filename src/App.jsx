@@ -1,20 +1,20 @@
 
-import './App.css'
-import { BrowserRouter, Route, Routes } from 'react-router'
-import HomePage from './pages/HomePage/HomePage'
-import MovieShowingTime from './pages/HomePage/MovieShowTime/MovieShowingTime'
-import MovieDetail from './pages/HomePage/MovieList/MovieDetail'
-import MovieTicketSelected from './pages/HomePage/MovieTicket/MovieTicketSelected'
-import RegisterPage from './pages/LoginPage/RegisterPage'
-import LoginPage from './pages/LoginPage/LoginPage'
-import { Toaster } from 'react-hot-toast'
-import Loading from './component/Loading/Loading'
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
-import TemPlate from './pages/Template/TemPlate'
-import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute'
-import AdminPage from './pages/AdminPage/AdminPage'
-import AddFilm from './pages/AdminPage/AddFilm'
-import EditFilm from './pages/AdminPage/EditFilm'
+import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router';
+import HomePage from './pages/HomePage/HomePage';
+import MovieShowingTime from './pages/HomePage/MovieShowTime/MovieShowingTime';
+import MovieDetail from './pages/HomePage/MovieList/MovieDetail';
+import MovieTicketSelected from './pages/HomePage/MovieTicket/MovieTicketSelected';
+import RegisterPage from './pages/LoginPage/RegisterPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import { Toaster } from 'react-hot-toast';
+import Loading from './component/Loading/Loading';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import TemPlate from './pages/Template/TemPlate';
+import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
+import AdminPage from './pages/AdminPage/AdminPage';
+import AddFilm from './pages/AdminPage/AddFilm';
+import EditFilm from './pages/AdminPage/EditFilm';
 function App() {
 
   return (
