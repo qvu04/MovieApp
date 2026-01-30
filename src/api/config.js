@@ -1,7 +1,7 @@
 import axios from "axios";
 import { hideLoading, showLoading } from "../component/Loading/redux/loadingSlice";
 import { store } from '../main';
-export const CYBER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA3OSIsIkhldEhhblN0cmluZyI6IjAzLzA5LzIwMjUiLCJIZXRIYW5UaW1lIjoiMTc1Njg1NzYwMDAwMCIsIm5iZiI6MTcyOTcwMjgwMCwiZXhwIjoxNzU3MDA1MjAwfQ.nPo29RkxTkE_C16RhJnxw90M3v3cu3Ur91a47F5epxA";
+export const CYBER_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJBSSBPZmZpY2UgMTEiLCJIZXRIYW5TdHJpbmciOiIxNC8wNS8yMDI2IiwiSGV0SGFuVGltZSI6IjE3Nzg3MTY4MDAwMDAiLCJuYmYiOjE3NjQwOTM2MDAsImV4cCI6MTc3ODg2ODAwMH0.YEZVs6ZqIqm0bsnZATZbj-N6xum1AIEZY7FWC5Zp7gY";
 const accessToken = localStorage.getItem("accessToken");
 export const https = axios.create({
     baseURL: "https://movienew.cybersoft.edu.vn",
